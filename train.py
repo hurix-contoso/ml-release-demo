@@ -1,5 +1,3 @@
-import os
-
 def train(rows):
     """Toy training function: returns the mean of the values."""
     return sum(rows) / len(rows)
