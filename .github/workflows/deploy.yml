@@ -28,6 +28,10 @@ jobs:
   deploy:
     needs: package
     runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -35,5 +39,7 @@ jobs:
           path: ./dist
       - uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - run: az ml environment create --file ./dist/environment.yml --workspace-name Contoso --resource-group gaurav.purohit-rg
